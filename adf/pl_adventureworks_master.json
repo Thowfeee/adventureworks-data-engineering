@@ -1,0 +1,55 @@
+{
+    "name": "pl_adventureworks_master",
+    "properties": {
+        "activities": [
+            {
+                "name": "Run_Bronze_To_Silver",
+                "type": "ExecutePipeline",
+                "dependsOn": [],
+                "policy": {
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "pipeline": {
+                        "referenceName": "pl_bronze_to_silver",
+                        "type": "PipelineReference"
+                    },
+                    "waitOnCompletion": true,
+                    "parameters": {
+                        "p_file_list": {
+                            "value": "@json('[{\"file_name\":\"sales_order_header.csv\",\"entity_name\":\"sales_order_header\",\"primary_key\":\"SalesOrderID\"},{\"file_name\":\"sales_order_details.csv\",\"entity_name\":\"sales_order_detail\",\"primary_key\":\"SalesOrderDetailID\"},{\"file_name\":\"product.csv\",\"entity_name\":\"product\",\"primary_key\":\"ProductID\"},{\"file_name\":\"customer.csv\",\"entity_name\":\"customer\",\"primary_key\":\"CustomerID\"}]')",
+                            "type": "Expression"
+                        }
+                    }
+                }
+            },
+            {
+                "name": "Run_Silver_To_Gold",
+                "type": "ExecutePipeline",
+                "dependsOn": [
+                    {
+                        "activity": "Run_Bronze_To_Silver",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "pipeline": {
+                        "referenceName": "pl_silver_to_gold",
+                        "type": "PipelineReference"
+                    },
+                    "waitOnCompletion": true
+                }
+            }
+        ],
+        "annotations": [],
+        "lastPublishTime": "2026-08-04T11:08:41Z"
+    },
+    "type": "Microsoft.DataFactory/factories/pipelines"
+}

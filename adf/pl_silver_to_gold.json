@@ -1,0 +1,30 @@
+{
+    "name": "pl_silver_to_gold",
+    "properties": {
+        "activities": [
+            {
+                "name": "Transform_Silver_To_Gold",
+                "type": "DatabricksNotebook",
+                "dependsOn": [],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "notebookPath": "/Users/hsmsyedm@liverpool.ac.uk/nb_silver_to_gold"
+                },
+                "linkedServiceName": {
+                    "referenceName": "ls_azure_databricks",
+                    "type": "LinkedServiceReference"
+                }
+            }
+        ],
+        "annotations": [],
+        "lastPublishTime": "2026-08-04T10:58:56Z"
+    },
+    "type": "Microsoft.DataFactory/factories/pipelines"
+}
